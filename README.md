@@ -1,15 +1,15 @@
-# Evernote to Obsidian Exporter
+# Evernote 2 Obsidian Exporter
 
 A **zero-config**, self-contained web app that converts Evernote export files (`.enex`) to Obsidian-compatible Markdown with YAML frontmatter.
 
-No database. No external services. No auth. Just drag, drop, and download.
+No database. No external services. No auth. Just drag, drop and download.
 
 ## Features
 
 - **Zero dependencies** — runs with `pnpm dev`, no MySQL, no external API keys
-- **ENEX parsing** — reads Evernote XML exports, extracts notes, resources, timestamps, and metadata
+- **ENEX parsing** — reads Evernote XML exports, extracts notes, resources, timestamps and metadata
 - **ENML to Markdown** — converts Evernote Markup Language to GitHub-flavored Markdown
-- **YAML frontmatter** — generates frontmatter with title, tags, created/updated dates, author, source URL, and GPS coordinates
+- **YAML frontmatter** — generates frontmatter with title, tags, created/updated dates, author, source URL and GPS coordinates
 - **Attachment handling** — deduplicates images and files by MD5 hash, stores in `_resources/` folders
 - **Stack support** — `Stack@@@Notebook.enex` files create `Stack/Notebook/` folder hierarchies
 - **ZIP packaging** — downloads a single ZIP containing all notes and attachments
@@ -40,7 +40,7 @@ pnpm dev
 ## How It Works
 
 1. **Upload** — Drop one or more `.enex` files onto the page
-2. **Convert** — Click "Convert Files"; each file is parsed, converted, and packaged
+2. **Convert** — Click "Convert Files"; each file is parsed, converted and packaged
 3. **Download** — Click "Download ZIP" to get a folder-structured archive
 4. **Import** — Extract the ZIP into your Obsidian vault
 
