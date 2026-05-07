@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] — 2025-05-07
+## [1.0.0] — 2026-05-07
 
 ### Added
 - Zero-config ENEX to Obsidian conversion — no database, no external services
