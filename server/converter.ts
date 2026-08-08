@@ -80,7 +80,6 @@ function decodeHtmlEntities(text: string): string {
     .replace(/</g, '<')
     .replace(/>/g, '>')
     .replace(/"/g, '"')
-    .replace(/'/g, "'")
     .replace(/&apos;/g, "'")
     .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)))
     .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
