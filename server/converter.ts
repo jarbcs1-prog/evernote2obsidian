@@ -31,13 +31,7 @@ function cleanContent(html: string, noteHash: string): string {
   text = text.replace(/<hr\s*\/?>/gi, '\n---\n');
   text = text.replace(/<!--[\s\S]*?-->/g, '');
   text = text.replace(/<[^>]+>/g, '');
-  text = text.replace(/&nbsp;/g, ' ');
-  text = text.replace(/</g, '<');
-  text = text.replace(/>/g, '>');
-  text = text.replace(/&/g, '&');
-  text = text.replace(/"/g, '"');
-  text = text.replace(/'/g, "'");
-  text = text.replace(/&apos;/g, "'");
+  text = decodeHtmlEntities(text);
   
   text = text.replace(/\n\s*\n/g, '\n\n');
   text = text.replace(/^[ \t]+/gm, '');
@@ -77,6 +71,19 @@ function formatDate(dateStr: string): string {
 
 function sanitizeFilename(name: string): string {
   return name.replace(/[<>:"/\\|?*]/g, '-').trim();
+}
+
+function decodeHtmlEntities(text: string): string {
+  return text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
 }
 
 function escapeYamlString(str: string): string {

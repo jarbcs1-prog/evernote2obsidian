@@ -165,43 +165,30 @@ function stripHtmlTags(html: string): string {
     .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<[^>]*>/g, '')
     .replace(/&nbsp;/g, ' ')
+    .replace(/&/g, '&')
     .replace(/</g, '<')
     .replace(/>/g, '>')
-    .replace(/&/g, '&')
     .replace(/"/g, '"')
     .replace(/'/g, "'")
-    .replace(/&apos;/g, "'");
+    .replace(/&apos;/g, "'")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
 }
 
 /**
  * Unescape HTML entities
  */
 function unescapeHtml(text: string): string {
-  const entities: Record<string, string> = {
-    '&nbsp;': ' ',
-    '<': '<',
-    '>': '>',
-    '&': '&',
-    '"': '"',
-    ''': "'",
-    '&apos;': "'",
-  };
-
-  let result = text;
-  for (const [entity, char] of Object.entries(entities)) {
-    result = result.replace(new RegExp(entity, 'g'), char);
-  }
-
-  // Handle numeric entities
-  result = result.replace(/&#(\d+);/g, (match, code) => {
-    return String.fromCharCode(parseInt(code, 10));
-  });
-
-  result = result.replace(/&#x([0-9a-f]+);/gi, (match, code) => {
-    return String.fromCharCode(parseInt(code, 16));
-  });
-
-  return result;
+  return text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
 }
 
 /**
