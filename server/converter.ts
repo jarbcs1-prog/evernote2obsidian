@@ -31,12 +31,13 @@ function cleanContent(html: string, noteHash: string): string {
   text = text.replace(/<hr\s*\/?>/gi, '\n---\n');
   text = text.replace(/<!--[\s\S]*?-->/g, '');
   text = text.replace(/<[^>]+>/g, '');
-  text = text.replace(/&/g, '&');
+  text = text.replace(/&nbsp;/g, ' ');
   text = text.replace(/</g, '<');
   text = text.replace(/>/g, '>');
+  text = text.replace(/&/g, '&');
   text = text.replace(/"/g, '"');
   text = text.replace(/'/g, "'");
-  text = text.replace(/&nbsp;/g, ' ');
+  text = text.replace(/&apos;/g, "'");
   
   text = text.replace(/\n\s*\n/g, '\n\n');
   text = text.replace(/^[ \t]+/gm, '');

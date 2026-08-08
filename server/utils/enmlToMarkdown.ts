@@ -1,5 +1,3 @@
-
-
 /**
  * Convert ENML (Evernote Markup Language) to GitHub-flavored Markdown
  */
@@ -164,11 +162,15 @@ function convertTableToMarkdown(tableContent: string): string {
  */
 function stripHtmlTags(html: string): string {
   return html
+    .replace(/<!--[\s\S]*?-->/g, '')
     .replace(/<[^>]*>/g, '')
     .replace(/&nbsp;/g, ' ')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&');
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/&/g, '&')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'")
+    .replace(/&apos;/g, "'");
 }
 
 /**
@@ -177,11 +179,11 @@ function stripHtmlTags(html: string): string {
 function unescapeHtml(text: string): string {
   const entities: Record<string, string> = {
     '&nbsp;': ' ',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&amp;': '&',
-    '&quot;': '"',
-    '&#39;': "'",
+    '<': '<',
+    '>': '>',
+    '&': '&',
+    '"': '"',
+    ''': "'",
     '&apos;': "'",
   };
 
@@ -253,7 +255,12 @@ function escapeYamlValue(value: string): string {
 
   // If value contains special characters, wrap in quotes
   if (/[:"'#@&*\[\]{}|>!%\\,]/.test(value) || value.includes('\n')) {
-    return `"${value.replace(/"/g, '\\"')}"`;
+    return `"${value
+      .replace(/\\/g, '\\\\')
+      .replace(/"/g, '\\"')
+      .replace(/\n/g, '\\n')
+      .replace(/\r/g, '\\r')
+      .replace(/\t/g, '\\t')}"`;
   }
 
   return value;
@@ -264,6 +271,7 @@ function escapeYamlValue(value: string): string {
  */
 export function escapeMarkdown(text: string): string {
   return text
+    .replace(/\\/g, '\\\\')
     .replace(/\*/g, '\\*')
     .replace(/_/g, '\\_')
     .replace(/\[/g, '\\[')
@@ -272,5 +280,13 @@ export function escapeMarkdown(text: string): string {
     .replace(/\./g, '\\.')
     .replace(/!/g, '\\!')
     .replace(/\(/g, '\\(')
-    .replace(/\)/g, '\\)');
+    .replace(/\)/g, '\\)')
+    .replace(/`/g, '\\`')
+    .replace(/\|/g, '\\|')
+    .replace(/\^/g, '\\^')
+    .replace(/~/g, '\\~')
+    .replace(/>/g, '\\>')
+    .replace(/</g, '\\<')
+    .replace(/\+/g, '\\+')
+    .replace(/=/g, '\\=');
 }
